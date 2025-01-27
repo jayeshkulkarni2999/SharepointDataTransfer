@@ -574,7 +574,7 @@ namespace SharepointTransfer
                 ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                 WebRequest myWebRequest;
 
-                string stGetAccessTokenUrl = "https://accounts.accesscontrol.windows.net/02dbf22a-371e-4cac-bdbc-60197ffafbe8/tokens/OAuth/2";
+                string stGetAccessTokenUrl = "https://accounts.accesscontrol.windows.net/{{account_id}}/tokens/OAuth/2";
                 myWebRequest = WebRequest.Create(stGetAccessTokenUrl);
                 myWebRequest.ContentType = "application/x-www-form-urlencoded";
                 myWebRequest.Method = "POST";
@@ -608,7 +608,7 @@ namespace SharepointTransfer
             {
                 ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                 WebRequest myWebRequest1;
-                string stGetAccessTokenUrl1 = "https://accounts.accesscontrol.windows.net/02dbf22a-371e-4cac-bdbc-60197ffafbe8/tokens/OAuth/2"; ;
+                string stGetAccessTokenUrl1 = "https://accounts.accesscontrol.windows.net/{{account_id}}/tokens/OAuth/2"; ;
                 myWebRequest1 = WebRequest.Create(stGetAccessTokenUrl1);
                 myWebRequest1.ContentType = "application/x-www-form-urlencoded";
                 myWebRequest1.Method = "POST";
@@ -1432,7 +1432,7 @@ namespace SharepointTransfer
         {
             try
             {
-                if(entity.Contains("Edelweiss Broking Limited") || entity.Contains("Edelweiss Commodities Services Limited"))
+                if(entity.Contains("{{company_name1}}") || entity.Contains("{{company_name2}}"))
                 {
                     param.client_id_destination = ConfigurationManager.AppSettings["CLIENT_ID_EBL"].ToString();
                     param.client_secret_destination = ConfigurationManager.AppSettings["CLIENT_SECRET_EBL"].ToString();
@@ -1442,7 +1442,7 @@ namespace SharepointTransfer
                     param.destinationsharepointurl = ConfigurationManager.AppSettings["DestinationSharePointURLEBL"].ToString();
                     param.tenantid_destination = ConfigurationManager.AppSettings["TENANTID_EBL"].ToString();
                 }
-                else if(entity.Contains("Edelweiss Financial Service Limited"))
+                else if(entity.Contains("{{company_name3}}"))
                 {
                     param.client_id_destination = ConfigurationManager.AppSettings["CLIENT_ID_EFSL"].ToString();
                     param.client_secret_destination = ConfigurationManager.AppSettings["CLIENT_SECRET_EFSL"].ToString();
@@ -1452,7 +1452,7 @@ namespace SharepointTransfer
                     param.destinationsharepointurl = ConfigurationManager.AppSettings["DestinationSharePointURLEFSL"].ToString();
                     param.tenantid_destination = ConfigurationManager.AppSettings["TENANTID_EFSL"].ToString();
                 }
-                else if (entity.Contains("Edelweiss Asset Management Limited") || entity.Contains("Edelweiss Securities Limited") || entity.Contains("ECL Finance Limited"))
+                else if (entity.Contains("{{company_name4}}") || entity.Contains("{{company_name5}}") || entity.Contains("{{company_name6}}"))
                 {
                     param.client_id_destination = ConfigurationManager.AppSettings["CLIENT_ID_EAML"].ToString();
                     param.client_secret_destination = ConfigurationManager.AppSettings["CLIENT_SECRET_EAML"].ToString();
@@ -1585,15 +1585,14 @@ namespace SharepointTransfer
                 if (ObjParams.ServerRelativeUrl_destination.Contains(FolderFullPath))
                 {
                     URL = ObjParams.destinationsharepointurl + "_api/web/GetFolderByServerRelativeUrl('" + ObjParams.ServerRelativeUrl_destination + "/" + ObjParams.filename + "')/ListItemAllFields";
-                    URL = "https://edeltech.sharepoint.com/sites/SharepointEBL/_api/web/Lists/getbytitle('Edelweiss Broking LTD')/fields";
+                    URL = "https:/{{sharepoint_url}}/sites/{{sharepoint_name}}/_api/web/Lists/getbytitle('{{filename}}')/fields";
                     URL = ObjParams.destinationsharepointurl + "_api/web/Lists/getbytitle('"+ tileDst + "')/fields";
                 }
                 else
                 {
                     URL = ObjParams.destinationsharepointurl + "_api/web/GetFolderByServerRelativeUrl('" + ObjParams.ServerRelativeUrl_destination + FolderFullPath + "/" + ObjParams.filename + "')/ListItemAllFields";
-                    URL = "https://edeltech.sharepoint.com/sites/SharepointEBL/_api/web/Lists/getbytitle('Edelweiss Broking LTD')/fields";
+                    URL = "https://{{sharepoint_url}}/sites/{{sharepoint_name}}/_api/web/Lists/getbytitle('{{filename}}')/fields";
                     URL = ObjParams.destinationsharepointurl + "_api/web/Lists/getbytitle('" + tileDst + "')/fields";
-                    //URL = "https://edeltech.sharepoint.com/sites/SharepointEBL/_api/web/fields";
                 }
                 Uri endpointUri = new Uri(URL);
                 ObjParams.ListItem_Metadata_Type = "SP.ListItem";
